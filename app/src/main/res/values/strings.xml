@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">CET-Successsion2</string>
+    <string name="the_succession">THE\nSUCCESSION</string>
+    <string name="flag">Flag</string>
+    <string name="start">START</string>
+    <string name="cntinue">CONTINUE</string>
+    <string name="help">HELP</string>
+    <string name="exit">EXIT</string>
+</resources>

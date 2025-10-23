@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="#5856D6"
+    tools:context=".ui.MainMenuFragment">
+
+    <!-- Top section with title and flag -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="vertical"
+        android:gravity="center">
+
+        <!-- Title -->
+        <TextView
+            android:id="@+id/tvTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/the_succession"
+            android:textSize="32sp"
+            android:letterSpacing="0.1"
+            android:textStyle="bold"
+            android:textColor="#FFFFFF"
+            android:gravity="center"
+            android:fontFamily="@font/press_start_2p"
+            android:layout_marginBottom="48dp" />
+
+        <!-- Flag graphic placeholder -->
+        <ImageView
+            android:layout_width="280dp"
+            android:layout_height="220dp"
+            android:src="@drawable/flag"
+            android:contentDescription="@string/flag"
+            android:background="#3D3C8C"
+            android:scaleType="fitCenter"
+            android:rotation="180"/>
+    </LinearLayout>
+
+    <!-- Bottom section with buttons -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:background="#2C2C2C">
+
+        <!-- Start Button -->
+        <Button
+            android:id="@+id/btnStart"
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            android:text="@string/start"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            android:textColor="#FFFFFF"
+            android:fontFamily="@font/press_start_2p"
+            android:backgroundTint="#4CAF50"
+            android:gravity="start|center_vertical"
+            android:paddingStart="16dp"
+            android:paddingEnd="16dp" />
+
+        <!-- TODO:Continue Button: hide this for now until the functionality is implemented -->
+<!--        <Button-->
+<!--            android:id="@+id/cntinue"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="80dp"-->
+<!--            android:text="@string/cntinue"-->
+<!--            android:textSize="24sp"-->
+<!--            android:textStyle="bold"-->
+<!--            android:textColor="#FFFFFF"-->
+<!--            android:fontFamily="@font/press_start_2p"-->
+<!--            android:backgroundTint="#4CAF50"-->
+<!--            android:gravity="start|center_vertical"-->
+<!--            android:paddingStart="16dp"-->
+<!--            android:paddingEnd="16dp" />-->
+
+        <!-- Help Button -->
+        <Button
+            android:id="@+id/btnHelp"
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            android:text="@string/help"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            android:textColor="#FFFFFF"
+            android:fontFamily="@font/press_start_2p"
+            android:backgroundTint="#607D8B"
+            android:gravity="start|center_vertical"
+            android:paddingStart="16dp"
+            android:paddingEnd="16dp" />
+
+        <!-- Exit Button -->
+        <Button
+            android:id="@+id/btnExit"
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            android:text="@string/exit"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            android:textColor="#FFFFFF"
+            android:fontFamily="@font/press_start_2p"
+            android:backgroundTint="#F44336"
+            android:gravity="start|center_vertical"
+            android:paddingStart="16dp"
+            android:paddingEnd="16dp" />
+    </LinearLayout>
+</LinearLayout>
