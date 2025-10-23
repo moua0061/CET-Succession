@@ -60,7 +60,11 @@ public class MainMenuFragment extends Fragment {
         //navigate to the HELP screen:
         binding.btnHelp.setOnClickListener(v -> {
             //go to HelpFragment
-            // TODO: Add navigation action
+            requireActivity().getSupportFragmentManager()
+            .beginTransaction()
+            .replace(android.R.id.content, new HelpFragment())
+            .addToBackStack("help")
+            .commit();
         });
 
         //Exits out of the app
@@ -68,14 +72,14 @@ public class MainMenuFragment extends Fragment {
 //            viewModel.onExitApp();
 //            requireActivity().finish();
             new AlertDialog.Builder(requireContext())
-                .setTitle("Exit The Succession")
-                .setMessage("Are you sure you want to exit the game?")
-                .setPositiveButton("Yes", (dialog, which) -> {
-                    viewModel.onExitApp();
-                    requireActivity().finish();
-                })
-                .setNegativeButton("No", null)
-                .show();
+            .setTitle("Exit The Succession")
+            .setMessage("Are you sure you want to exit the game?")
+            .setPositiveButton("Yes", (dialog, which) -> {
+                viewModel.onExitApp();
+                requireActivity().finish();
+            })
+            .setNegativeButton("No", null)
+            .show();
         });
     }
 

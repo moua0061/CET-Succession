@@ -6,4 +6,16 @@
     <string name="cntinue">CONTINUE</string>
     <string name="help">HELP</string>
     <string name="exit">EXIT</string>
+    <string name="how2play">HOW TO PLAY</string>
+    <string name="gameOverview">GAME OVERVIEW</string>
+    <string name="how2playDirections">
+        Navigate the treacherous world of political intrigue as you manage your relationships, power, and public perception. Each week presents new challenges and decisions that will shape your path to succession.
+    </string>
+    <string name="urStats">YOUR STATS</string>
+    <string name="directions2">• POWER: Your political influence and ability to make things happen\n\n• LOYALTY: How much your inner circle trusts and supports you\n\n• HEAT: Public and media attention—too much can be dangerous</string>
+    <string name="mk_decisions">MAKING DECISIONS</string>
+    <string name="each_week">Each week, you\'ll face critical decisions. Your choices will affect your stats and relationships. Consider the consequences carefully—some decisions have immediate effects, while others may impact you weeks later.</string>
+    <string name="win_game">WINNING THE GAME</string>
+    <string name="balance_is_key">Balance is key. Keep your stats healthy while navigating the complex web of relationships and power plays. Reach the end with the right combination of power, loyalty, and heat management to secure your succession.</string>
+    <string name="go_back">GO BACK</string>
 </resources>
