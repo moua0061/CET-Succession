@@ -1,7 +1,6 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
-    android:background="#5046E5"
-    android:padding="16dp"
+    android:background="#2D2D36"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -9,7 +8,8 @@
     <LinearLayout
         android:orientation="horizontal"
         android:gravity="center"
-        android:layout_width="match_parent"
+        android:layout_width="fill_parent"
+        android:background="#4740FF"
         android:layout_height="wrap_content">
         <LinearLayout android:orientation="vertical" android:gravity="center" android:layout_weight="1"
             android:layout_width="0dp" android:layout_height="wrap_content">
@@ -34,8 +34,10 @@
 
     <!-- Scenario text -->
     <TextView android:id="@+id/tv_text"
-        android:textColor="#FFFFFF" android:textSize="16sp"
+        android:textColor="#FFFFFF" android:textSize="16sp" android:layout_gravity="center"
         android:layout_marginTop="24dp"
+        android:textAlignment="center"
+        android:fontFamily="@font/press_start_2p"
         android:layout_width="match_parent" android:layout_height="wrap_content"/>
 
     <!-- Character portrait -->
@@ -52,18 +54,31 @@
 
     <!-- Choice buttons -->
     <Button android:id="@+id/btn_choice1" android:layout_marginTop="24dp"
-        android:layout_width="match_parent" android:layout_height="wrap_content"/>
+        android:layout_width="400dp" android:layout_height="60dp"
+        android:fontFamily="@font/press_start_2p"
+        android:layout_gravity="center"
+        android:backgroundTint="#22C55E"
+        />
     <Button android:id="@+id/btn_choice2" android:layout_marginTop="8dp"
-        android:layout_width="match_parent" android:layout_height="wrap_content"/>
+        android:layout_width="400dp" android:layout_height="60dp"
+        android:fontFamily="@font/press_start_2p"
+        android:layout_gravity="center"
+        android:backgroundTint="#F59E0B"
+        />
     <Button android:id="@+id/btn_choice3" android:layout_marginTop="8dp"
-        android:layout_width="match_parent" android:layout_height="wrap_content"/>
+        android:layout_width="400dp" android:layout_height="60dp"
+        android:fontFamily="@font/press_start_2p"
+        android:layout_gravity="center"
+        android:backgroundTint="#64748B"
+        />
 
     <!-- Week indicator -->
     <TextView android:id="@+id/tv_week"
         android:textColor="#FFFFFF" android:textStyle="bold" android:textSize="18sp"
         android:gravity="center" android:text="WEEK 4"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="110dp"
+        android:background="#4740FF"
         android:fontFamily="@font/press_start_2p"
-        android:layout_width="match_parent" android:layout_height="wrap_content"/>
+        android:layout_width="match_parent" android:layout_height="50dp"/>
 
 </LinearLayout>
