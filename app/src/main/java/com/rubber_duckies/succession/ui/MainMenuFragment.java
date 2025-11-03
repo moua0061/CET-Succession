@@ -10,6 +10,9 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import com.rubber_duckies.succession.databinding.FragmentMainMenuBinding;
+import android.content.Intent;
+import com.rubber_duckies.succession.ui.CoreLoopActivity;
+
 
 public class MainMenuFragment extends Fragment {
 
@@ -50,8 +53,8 @@ public class MainMenuFragment extends Fragment {
         //Start the game:
         binding.btnStart.setOnClickListener(v -> {
             viewModel.onStartNewGame();
-            //go to BriefFragment for week 1
-            // TODO: Add navigation action
+            Intent intent = new Intent(requireContext(), CoreLoopActivity.class);
+            startActivity(intent);
         });
 
         //Continue where player left off:

@@ -14,23 +14,27 @@
         <LinearLayout android:orientation="vertical" android:gravity="center" android:layout_weight="1"
             android:layout_width="0dp" android:layout_height="wrap_content">
             <ImageView android:src="@drawable/ic_power" android:layout_width="48dp" android:layout_height="48dp"/>
-            <TextView android:id="@+id/tv_power" android:text="0" android:textColor="#FFF" android:gravity="center"/>
+            <TextView android:id="@+id/tv_power" android:text="0" android:textColor="#FFF" android:gravity="center" android:layout_height="20dp" android:layout_width="50dp"        android:fontFamily="@font/press_start_2p"
+                />
         </LinearLayout>
         <LinearLayout android:orientation="vertical" android:gravity="center" android:layout_weight="1"
             android:layout_width="0dp" android:layout_height="wrap_content">
             <ImageView android:src="@drawable/ic_loyalty" android:layout_width="48dp" android:layout_height="48dp"/>
-            <TextView android:id="@+id/tv_loyalty" android:text="0" android:textColor="#FFF" android:gravity="center"/>
+            <TextView android:id="@+id/tv_loyalty" android:text="0" android:textColor="#FFF" android:gravity="center" android:layout_height="20dp" android:layout_width="50dp"        android:fontFamily="@font/press_start_2p"
+                />
+
         </LinearLayout>
         <LinearLayout android:orientation="vertical" android:gravity="center" android:layout_weight="1"
             android:layout_width="0dp" android:layout_height="wrap_content">
             <ImageView android:src="@drawable/ic_heat" android:layout_width="48dp" android:layout_height="48dp"/>
-            <TextView android:id="@+id/tv_heat" android:text="0" android:textColor="#FFF" android:gravity="center"/>
+            <TextView android:id="@+id/tv_heat" android:text="0" android:textColor="#FFF" android:gravity="center" android:layout_height="20dp" android:layout_width="50dp"         android:fontFamily="@font/press_start_2p"
+                />
         </LinearLayout>
     </LinearLayout>
 
     <!-- Scenario text -->
     <TextView android:id="@+id/tv_text"
-        android:textColor="#FFF" android:textSize="16sp"
+        android:textColor="#FFFFFF" android:textSize="16sp"
         android:layout_marginTop="24dp"
         android:layout_width="match_parent" android:layout_height="wrap_content"/>
 
@@ -42,7 +46,8 @@
         android:layout_marginTop="16dp"/>
 
     <TextView android:text="The President"
-        android:textColor="#AAA" android:gravity="center"
+        android:textColor="#FFFFFF" android:gravity="center"
+        android:fontFamily="@font/press_start_2p"
         android:layout_width="match_parent" android:layout_height="wrap_content"/>
 
     <!-- Choice buttons -->
@@ -55,9 +60,10 @@
 
     <!-- Week indicator -->
     <TextView android:id="@+id/tv_week"
-        android:textColor="#4EA3FF" android:textStyle="bold" android:textSize="18sp"
+        android:textColor="#FFFFFF" android:textStyle="bold" android:textSize="18sp"
         android:gravity="center" android:text="WEEK 4"
         android:layout_marginTop="16dp"
+        android:fontFamily="@font/press_start_2p"
         android:layout_width="match_parent" android:layout_height="wrap_content"/>
 
 </LinearLayout>

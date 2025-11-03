@@ -1,5 +1,7 @@
 package com.rubber_duckies.succession;
 
-class GameState {
-	int power = 0, heat = 0, loyalty = 50;
+public class GameState {
+	public int power = 0;
+    public int heat = 0;
+    public int loyalty = 50;
 }

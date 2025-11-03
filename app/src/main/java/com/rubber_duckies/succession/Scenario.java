@@ -1,7 +1,7 @@
 package com.rubber_duckies.succession;
 
-class Scenario {
-	String title;
-	String text;
-	Choice[] choices;
+public class Scenario {
+	public String title;
+	public String text;
+	public Choice[] choices;
 }
