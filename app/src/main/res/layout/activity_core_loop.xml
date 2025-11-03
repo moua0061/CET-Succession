@@ -1,0 +1,84 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:background="#2D2D36"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <!-- Stats bar -->
+    <LinearLayout
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:layout_width="fill_parent"
+        android:background="#4740FF"
+        android:layout_height="wrap_content">
+        <LinearLayout android:orientation="vertical" android:gravity="center" android:layout_weight="1"
+            android:layout_width="0dp" android:layout_height="wrap_content">
+            <ImageView android:src="@drawable/ic_power" android:layout_width="48dp" android:layout_height="48dp"/>
+            <TextView android:id="@+id/tv_power" android:text="0" android:textColor="#FFF" android:gravity="center" android:layout_height="20dp" android:layout_width="50dp"        android:fontFamily="@font/press_start_2p"
+                />
+        </LinearLayout>
+        <LinearLayout android:orientation="vertical" android:gravity="center" android:layout_weight="1"
+            android:layout_width="0dp" android:layout_height="wrap_content">
+            <ImageView android:src="@drawable/ic_loyalty" android:layout_width="48dp" android:layout_height="48dp"/>
+            <TextView android:id="@+id/tv_loyalty" android:text="0" android:textColor="#FFF" android:gravity="center" android:layout_height="20dp" android:layout_width="50dp"        android:fontFamily="@font/press_start_2p"
+                />
+
+        </LinearLayout>
+        <LinearLayout android:orientation="vertical" android:gravity="center" android:layout_weight="1"
+            android:layout_width="0dp" android:layout_height="wrap_content">
+            <ImageView android:src="@drawable/ic_heat" android:layout_width="48dp" android:layout_height="48dp"/>
+            <TextView android:id="@+id/tv_heat" android:text="0" android:textColor="#FFF" android:gravity="center" android:layout_height="20dp" android:layout_width="50dp"         android:fontFamily="@font/press_start_2p"
+                />
+        </LinearLayout>
+    </LinearLayout>
+
+    <!-- Scenario text -->
+    <TextView android:id="@+id/tv_text"
+        android:textColor="#FFFFFF" android:textSize="16sp" android:layout_gravity="center"
+        android:layout_marginTop="24dp"
+        android:textAlignment="center"
+        android:fontFamily="@font/press_start_2p"
+        android:layout_width="match_parent" android:layout_height="wrap_content"/>
+
+    <!-- Character portrait -->
+    <ImageView android:id="@+id/img_character"
+        android:layout_width="200dp" android:layout_height="200dp"
+        android:layout_gravity="center_horizontal"
+        android:src="@drawable/ic_president"
+        android:layout_marginTop="16dp"/>
+
+    <TextView android:text="The President"
+        android:textColor="#FFFFFF" android:gravity="center"
+        android:fontFamily="@font/press_start_2p"
+        android:layout_width="match_parent" android:layout_height="wrap_content"/>
+
+    <!-- Choice buttons -->
+    <Button android:id="@+id/btn_choice1" android:layout_marginTop="24dp"
+        android:layout_width="400dp" android:layout_height="60dp"
+        android:fontFamily="@font/press_start_2p"
+        android:layout_gravity="center"
+        android:backgroundTint="#22C55E"
+        />
+    <Button android:id="@+id/btn_choice2" android:layout_marginTop="8dp"
+        android:layout_width="400dp" android:layout_height="60dp"
+        android:fontFamily="@font/press_start_2p"
+        android:layout_gravity="center"
+        android:backgroundTint="#F59E0B"
+        />
+    <Button android:id="@+id/btn_choice3" android:layout_marginTop="8dp"
+        android:layout_width="400dp" android:layout_height="60dp"
+        android:fontFamily="@font/press_start_2p"
+        android:layout_gravity="center"
+        android:backgroundTint="#64748B"
+        />
+
+    <!-- Week indicator -->
+    <TextView android:id="@+id/tv_week"
+        android:textColor="#FFFFFF" android:textStyle="bold" android:textSize="18sp"
+        android:gravity="center" android:text="WEEK 4"
+        android:layout_marginTop="110dp"
+        android:background="#4740FF"
+        android:fontFamily="@font/press_start_2p"
+        android:layout_width="match_parent" android:layout_height="50dp"/>
+
+</LinearLayout>
