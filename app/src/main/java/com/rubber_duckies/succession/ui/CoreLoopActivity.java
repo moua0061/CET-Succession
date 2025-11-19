@@ -15,6 +15,7 @@ public class CoreLoopActivity extends AppCompatActivity {
     private GameState state = new GameState();
     private List<Scenario> scenarios;
     private int currentIndex = 0;
+    private boolean showingFragment = false;
 
     @Override
     protected void onCreate(Bundle b) {
@@ -31,10 +32,39 @@ public class CoreLoopActivity extends AppCompatActivity {
         btn3 = findViewById(R.id.btn_choice3);
 
         scenarios = makeStubScenarios();
+        //render();
+        //listen for when fragments are popped from back stack
+        getSupportFragmentManager().addOnBackStackChangedListener(() -> {
+            if (getSupportFragmentManager().getBackStackEntryCount() == 0) {
+                //fragment was popped, we're back to the activity
+                showingFragment = false;
+
+                //increment to next week AFTER returning from summary
+                currentIndex++;
+
+//                if (currentIndex < scenarios.size()) {
+//                    render();
+//                }
+                //check if game is over
+                if (currentIndex >= scenarios.size()) {
+                    //Toast.makeText(this, "End of game. You've completed all weeks!", Toast.LENGTH_LONG).show();
+                    finish();
+                } else {
+                    //render the next week
+                    render();
+                }
+            }
+        });
+
         render();
     }
 
     private void render() {
+        //don't render if we're showing a fragment
+        if (showingFragment) {
+            return;
+        }
+
         Scenario sc = scenarios.get(currentIndex);
         tvText.setText(sc.text);
         tvWeek.setText("WEEK " + (currentIndex + 1));
@@ -75,16 +105,16 @@ public class CoreLoopActivity extends AppCompatActivity {
         showSummary(previousPower, previousLoyalty, previousHeat, c.text);
 
         //increment to next week
-        currentIndex++;
+        //currentIndex++;
 
         //check if game is over
-        if (currentIndex >= scenarios.size()) {
+        //if (currentIndex >= scenarios.size()) {
             //Toast.makeText(this, "End of game.", Toast.LENGTH_LONG).show();
-            finish();
-        } else {
+            //finish();
+        //} else {
             //show summary fragment with the results
-            showSummary(previousPower, previousLoyalty, previousHeat, c.text);
-        }
+            //showSummary(previousPower, previousLoyalty, previousHeat, c.text);
+        //}
     }
 
     private void showSummary(int previousPower, int previousLoyalty, int previousHeat, String chosenAction) {
