@@ -3,7 +3,6 @@ package com.rubber_duckies.succession.ui;
 import android.os.Bundle;
 import android.widget.*;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.FragmentTransaction;
 
 import com.rubber_duckies.succession.*;
 import com.rubber_duckies.succession.R;
@@ -64,42 +63,42 @@ public class CoreLoopActivity extends AppCompatActivity {
 //        } else {
 //            render();
 //        }
-        // Store previous stats before applying choice
+        //store previous stats before applying choice
         int previousPower = state.power;
         int previousLoyalty = state.loyalty;
         int previousHeat = state.heat;
 
         applyChoice(c);
-        Toast.makeText(this, c.text, Toast.LENGTH_SHORT).show();
+        //Toast.makeText(this, c.text, Toast.LENGTH_SHORT).show();
 
-        // Navigate to SummaryFragment instead of immediately continuing
+        //go to SummaryFragment instead of immediately continuing
         showSummary(previousPower, previousLoyalty, previousHeat, c.text);
 
-        // Increment to next week
+        //increment to next week
         currentIndex++;
 
-        // Check if game is over
+        //check if game is over
         if (currentIndex >= scenarios.size()) {
-            Toast.makeText(this, "End of game.", Toast.LENGTH_LONG).show();
+            //Toast.makeText(this, "End of game.", Toast.LENGTH_LONG).show();
             finish();
         } else {
-            // Show summary fragment with the results
+            //show summary fragment with the results
             showSummary(previousPower, previousLoyalty, previousHeat, c.text);
         }
     }
 
     private void showSummary(int previousPower, int previousLoyalty, int previousHeat, String chosenAction) {
-        // Create outcome text based on choice
+        //outcome text based on choice
         String outcome = "You chose: \"" + chosenAction + "\"\n\nThe political landscape shifts in response to your decision..." + "Your allies and enemies take note of your actions.";
 
-        // Generate hint based on current stats
+        //generate hint based on current stats
         String hint = generateHint();
 
-        // Create and show SummaryFragment
+        //create and show SummaryFragment
         SummaryFragment summaryFragment = SummaryFragment.newInstance(
                 outcome,
                 hint,
-                currentIndex, // current week
+                currentIndex, //current week
                 state.power,
                 state.loyalty,
                 state.heat,
@@ -108,16 +107,12 @@ public class CoreLoopActivity extends AppCompatActivity {
                 previousHeat
         );
 
-//        getSupportFragmentManager()
-//                .beginTransaction()
-//                .replace(android.R.id.content, summaryFragment)
-//                .addToBackStack("summary")
-//                .commit();
-        // Replace the current view with the summary fragment
-        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        transaction.replace(android.R.id.content, summaryFragment);
-        transaction.addToBackStack("summary");
-        transaction.commit();
+        //replace the current view with the summary fragment
+        getSupportFragmentManager()
+                .beginTransaction()
+                .replace(android.R.id.content, summaryFragment)
+                .addToBackStack("summary")
+                .commit();
     }
 
     private String generateHint() {

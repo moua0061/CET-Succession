@@ -87,7 +87,7 @@ public class SummaryFragment extends Fragment {
             String hint = args.getString(ARG_HINT, "");
             int week = args.getInt(ARG_WEEK, 1);
 
-            // Create GameState from current values
+            //create GameState from current values
             GameState state = new GameState();
             state.power = args.getInt(ARG_CURRENT_POWER, 0);
             state.loyalty = args.getInt(ARG_CURRENT_LOYALTY, 50);
@@ -102,7 +102,7 @@ public class SummaryFragment extends Fragment {
     }
 
     private void setupObservers() {
-        // Observe game state
+        //observe game state
         viewModel.getGameState().observe(getViewLifecycleOwner(), gameState -> {
             if (gameState != null) {
                 binding.tvCurrentPower.setText(String.valueOf(gameState.power));
@@ -111,41 +111,41 @@ public class SummaryFragment extends Fragment {
             }
         });
 
-        // Observe stat trends
+        //observe stat trends
         viewModel.getStatTrends().observe(getViewLifecycleOwner(), trends -> {
             if (trends != null) {
-                // Power trend
+                //power trend
                 String powerText = trends.powerArrow + " " + formatDiff(trends.powerDiff);
                 binding.tvPowerTrend.setText(powerText);
                 binding.tvPowerTrend.setTextColor(getTrendColor(trends.powerDiff));
 
-                // Loyalty trend
+                //loyalty trend
                 String loyaltyText = trends.loyaltyArrow + " " + formatDiff(trends.loyaltyDiff);
                 binding.tvLoyaltyTrend.setText(loyaltyText);
                 binding.tvLoyaltyTrend.setTextColor(getTrendColor(trends.loyaltyDiff));
 
-                // Heat trend
+                //heat trend
                 String heatText = trends.heatArrow + " " + formatDiff(trends.heatDiff);
                 binding.tvHeatTrend.setText(heatText);
                 binding.tvHeatTrend.setTextColor(getTrendColor(trends.heatDiff));
             }
         });
 
-        // Observe outcome text
+        //observe outcome text
         viewModel.getOutcomeText().observe(getViewLifecycleOwner(), outcome -> {
             if (outcome != null) {
                 binding.tvOutcomeText.setText(outcome);
             }
         });
 
-        // Observe hint text
+        //observe hint text
         viewModel.getHintText().observe(getViewLifecycleOwner(), hint -> {
             if (hint != null) {
                 binding.tvHintText.setText("Hint for next week: " + hint);
             }
         });
 
-        // Observe current week
+        //observe current week
         viewModel.getCurrentWeek().observe(getViewLifecycleOwner(), week -> {
             if (week != null) {
                 binding.tvSummaryHeader.setText("Week " + week + " Summary");
@@ -155,18 +155,18 @@ public class SummaryFragment extends Fragment {
     }
 
     private void setupClickListeners() {
-        // Continue button - navigate back to CoreLoopActivity for next week
+        //continue button - go back to CoreLoopActivity for next week
         binding.btnContinue.setOnClickListener(v -> {
-            // Pop the fragment and return to CoreLoopActivity
+            //pop the fragment and return to CoreLoopActivity
             if (getActivity() != null) {
                 getActivity().getSupportFragmentManager().popBackStack();
             }
         });
 
-        // Exit button - return to main menu
+        //exit button - return to main menu
         binding.btnExit.setOnClickListener(v -> {
             if (getActivity() != null) {
-                // Navigate back to MainActivity/MainMenuFragment
+                //go back to MainActivity/MainMenuFragment
                 Intent intent = new Intent(requireContext(), com.rubber_duckies.succession.MainActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(intent);
