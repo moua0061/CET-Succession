@@ -253,25 +253,39 @@
         <Button
             android:id="@+id/btn_continue"
             android:layout_width="match_parent"
-            android:layout_height="60dp"
+            android:layout_height="wrap_content"
+            android:minHeight="70dp"
             android:text="CONTINUE TO WEEK 2"
-            android:textSize="18sp"
+            android:textSize="14sp"
             android:textStyle="bold"
             android:textColor="#FFFFFF"
             android:fontFamily="@font/press_start_2p"
             android:backgroundTint="#22C55E"
+            android:paddingTop="16dp"
+            android:paddingBottom="16dp"
+            android:paddingStart="8dp"
+            android:paddingEnd="8dp"
+            android:maxLines="2"
+            android:ellipsize="none"
             android:layout_marginBottom="12dp" />
 
         <Button
             android:id="@+id/btn_exit"
             android:layout_width="match_parent"
-            android:layout_height="60dp"
+            android:layout_height="wrap_content"
+            android:minHeight="70dp"
             android:text="EXIT TO MAIN MENU"
-            android:textSize="18sp"
+            android:textSize="14sp"
             android:textStyle="bold"
             android:textColor="#FFFFFF"
             android:fontFamily="@font/press_start_2p"
-            android:backgroundTint="#607D8B" />
+            android:backgroundTint="#607D8B"
+            android:paddingTop="16dp"
+            android:paddingBottom="16dp"
+            android:paddingStart="8dp"
+            android:paddingEnd="8dp"
+            android:maxLines="2"
+            android:ellipsize="none" />
 
     </LinearLayout>
 </ScrollView>
