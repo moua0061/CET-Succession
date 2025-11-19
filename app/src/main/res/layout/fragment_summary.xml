@@ -1,0 +1,277 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#2D2D36"
+    android:fillViewport="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="24dp">
+
+        <!-- Header -->
+        <TextView
+            android:id="@+id/tv_summary_header"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Week 1 Summary"
+            android:textColor="#FFFFFF"
+            android:textSize="28sp"
+            android:textStyle="bold"
+            android:fontFamily="@font/press_start_2p"
+            android:gravity="center"
+            android:layout_marginBottom="24dp" />
+
+        <!-- Outcome Text -->
+        <TextView
+            android:id="@+id/tv_outcome_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Your decision had significant consequences..."
+            android:textColor="#FFFFFF"
+            android:textSize="16sp"
+            android:fontFamily="sans-serif"
+            android:lineSpacingExtra="4dp"
+            android:layout_marginBottom="32dp" />
+
+        <!-- Current Stats Section -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Current Stats"
+            android:textColor="#FFFFFF"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:fontFamily="@font/press_start_2p"
+            android:layout_marginBottom="16dp" />
+
+        <!-- Stats Display -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:background="#4740FF"
+            android:padding="16dp"
+            android:layout_marginBottom="24dp">
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:gravity="center">
+                <ImageView
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:src="@drawable/ic_power"
+                    android:contentDescription="Power" />
+                <TextView
+                    android:id="@+id/tv_current_power"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="0"
+                    android:textColor="#FFFFFF"
+                    android:textSize="20sp"
+                    android:fontFamily="@font/press_start_2p"
+                    android:layout_marginTop="8dp" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Power"
+                    android:textColor="#FFFFFF"
+                    android:textSize="12sp"
+                    android:layout_marginTop="4dp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:gravity="center">
+                <ImageView
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:src="@drawable/ic_loyalty"
+                    android:contentDescription="Loyalty" />
+                <TextView
+                    android:id="@+id/tv_current_loyalty"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="0"
+                    android:textColor="#FFFFFF"
+                    android:textSize="20sp"
+                    android:fontFamily="@font/press_start_2p"
+                    android:layout_marginTop="8dp" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Loyalty"
+                    android:textColor="#FFFFFF"
+                    android:textSize="12sp"
+                    android:layout_marginTop="4dp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:gravity="center">
+                <ImageView
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:src="@drawable/ic_heat"
+                    android:contentDescription="Heat" />
+                <TextView
+                    android:id="@+id/tv_current_heat"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="0"
+                    android:textColor="#FFFFFF"
+                    android:textSize="20sp"
+                    android:fontFamily="@font/press_start_2p"
+                    android:layout_marginTop="8dp" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Heat"
+                    android:textColor="#FFFFFF"
+                    android:textSize="12sp"
+                    android:layout_marginTop="4dp" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <!-- Trends Section -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Changes"
+            android:textColor="#FFFFFF"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:fontFamily="@font/press_start_2p"
+            android:layout_marginBottom="16dp" />
+
+        <!-- Trends Table -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:background="#1a1a1a"
+            android:padding="16dp"
+            android:layout_marginBottom="24dp">
+
+            <!-- Power Trend -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginBottom="12dp">
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Power:"
+                    android:textColor="#FFFFFF"
+                    android:textSize="14sp" />
+                <TextView
+                    android:id="@+id/tv_power_trend"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="↑ +3"
+                    android:textColor="#22C55E"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    android:fontFamily="@font/press_start_2p" />
+            </LinearLayout>
+
+            <!-- Loyalty Trend -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginBottom="12dp">
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Loyalty:"
+                    android:textColor="#FFFFFF"
+                    android:textSize="14sp" />
+                <TextView
+                    android:id="@+id/tv_loyalty_trend"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="↓ -1"
+                    android:textColor="#EF4444"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    android:fontFamily="@font/press_start_2p" />
+            </LinearLayout>
+
+            <!-- Heat Trend -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Heat:"
+                    android:textColor="#FFFFFF"
+                    android:textSize="14sp" />
+                <TextView
+                    android:id="@+id/tv_heat_trend"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="→ 0"
+                    android:textColor="#64748B"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    android:fontFamily="@font/press_start_2p" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <!-- Hint Text -->
+        <TextView
+            android:id="@+id/tv_hint_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Hint for next week: Maintain balance..."
+            android:textColor="#F59E0B"
+            android:textSize="14sp"
+            android:textStyle="italic"
+            android:layout_marginBottom="32dp" />
+
+        <!-- Buttons -->
+        <Button
+            android:id="@+id/btn_continue"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:text="CONTINUE TO WEEK 2"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:textColor="#FFFFFF"
+            android:fontFamily="@font/press_start_2p"
+            android:backgroundTint="#22C55E"
+            android:layout_marginBottom="12dp" />
+
+        <Button
+            android:id="@+id/btn_exit"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:text="EXIT TO MAIN MENU"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:textColor="#FFFFFF"
+            android:fontFamily="@font/press_start_2p"
+            android:backgroundTint="#607D8B" />
+
+    </LinearLayout>
+</ScrollView>
