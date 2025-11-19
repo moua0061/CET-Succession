@@ -60,6 +60,9 @@ public class CoreLoopActivity extends AppCompatActivity {
         render();
     }
 
+    /**
+     * Renders the Summary Fragment
+     */
     private void render() {
         //don't render if we're showing a fragment
         if (showingFragment) {
@@ -83,6 +86,10 @@ public class CoreLoopActivity extends AppCompatActivity {
         btn3.setOnClickListener(v -> onChoose(sc.choices[2]));
     }
 
+    /**
+     * When selecting a choice from the briefing
+     * @param c - Choice
+     */
     private void onChoose(Choice c) {
 //        applyChoice(c);
 //        Toast.makeText(this, c.text, Toast.LENGTH_SHORT).show();
@@ -120,6 +127,14 @@ public class CoreLoopActivity extends AppCompatActivity {
         //}
     }
 
+    /**
+     * Show the Summary Fragment that shows the outcome, hint, stats, trends, etc
+     * @param previousPower - int
+     * @param previousLoyalty - int
+     * @param previousHeat - int
+     * @param chosenAction - String
+     * @param isFinalWeek - boolean
+     */
     private void showSummary(int previousPower, int previousLoyalty, int previousHeat, String chosenAction, boolean isFinalWeek) {
         showingFragment = true;
 
@@ -131,47 +146,51 @@ public class CoreLoopActivity extends AppCompatActivity {
 
         //If this is the final week, show a different message
         if (isFinalWeek) {
-            showFinalWeekAlert();
+            showFinalBriefingAlert();
         }
 
         //create and show SummaryFragment
         SummaryFragment summaryFragment = SummaryFragment.newInstance(
-                outcome,
-                hint,
-                currentIndex +1, //current week
-                state.power,
-                state.loyalty,
-                state.heat,
-                previousPower,
-                previousLoyalty,
-                previousHeat,
-                isFinalWeek
+            outcome,
+            hint,
+            currentIndex +1, //current week
+            state.power,
+            state.loyalty,
+            state.heat,
+            previousPower,
+            previousLoyalty,
+            previousHeat,
+            isFinalWeek
         );
 
         //replace the current view with the summary fragment
         getSupportFragmentManager()
-                .beginTransaction()
-                .replace(android.R.id.content, summaryFragment)
-                .addToBackStack("summary")
-                .commit();
+            .beginTransaction()
+            .replace(android.R.id.content, summaryFragment)
+            .addToBackStack("summary")
+            .commit();
     }
 
     /**
-     * Shows an alert when the player reaches the final week
+     * Shows an alert when the player reaches the final briefing for the day
      */
-    private void showFinalWeekAlert() {
+    private void showFinalBriefingAlert() {
         new AlertDialog.Builder(this)
-                .setTitle("End of Available Briefings")
-                .setMessage("You have reached the maximum limit of briefings for today. " +
-                        "The President will provide more briefings tomorrow. " +
-                        "Your progress has been noted.")
-                .setPositiveButton("Understood", (dialog, which) -> {
-                    dialog.dismiss();
-                })
-                .setCancelable(false)
-                .show();
+            .setTitle("End of Available Briefings")
+            .setMessage("You have reached the maximum limit of briefings for today. " +
+                    "The President will provide more briefings tomorrow. " +
+                    "Your progress has been noted.")
+            .setPositiveButton("Understood", (dialog, which) -> {
+                dialog.dismiss();
+            })
+            .setCancelable(false)
+            .show();
     }
 
+    /**
+     * Generate a hint for next week
+     * @return String
+     */
     private String generateHint() {
         if (state.power < 30) {
             return "You need to build more political influence. Consider choices that increase your power.";
@@ -186,12 +205,20 @@ public class CoreLoopActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Apply the choice selected and calculates the stats for power, heat & loyalty
+     * @param c - Choice
+     */
     private void applyChoice(Choice c) {
         state.power += c.effects.power;
         state.heat += c.effects.heat;
         state.loyalty = Math.max(0, Math.min(100, state.loyalty + c.effects.loyalty));
     }
 
+    /**
+     * Make the briefings/scenarios for each work
+     * @return List<Scenario>
+     */
     private List<Scenario> makeStubScenarios() {
         List<Scenario> scenarioList = new ArrayList<>();
 

@@ -1,5 +1,6 @@
 package com.rubber_duckies.succession.ui;
 
+import android.annotation.SuppressLint;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -83,6 +84,9 @@ public class SummaryFragment extends Fragment {
         setupClickListeners();
     }
 
+    /**
+     * Load the data from arguments
+     */
     private void loadDataFromArguments() {
         Bundle args = getArguments();
         if (args != null) {
@@ -110,6 +114,10 @@ public class SummaryFragment extends Fragment {
         }
     }
 
+    /**
+     * Usingi the GameState to set up observers
+     */
+    @SuppressLint("SetTextI18n")
     private void setupObservers() {
         //observe game state
         viewModel.getGameState().observe(getViewLifecycleOwner(), gameState -> {
@@ -163,6 +171,9 @@ public class SummaryFragment extends Fragment {
         });
     }
 
+    /**
+     * Setup click listeners
+     */
     private void setupClickListeners() {
         //continue button - go back to CoreLoopActivity for next week
         binding.btnContinue.setOnClickListener(v -> {
@@ -207,6 +218,9 @@ public class SummaryFragment extends Fragment {
         }
     }
 
+    /**
+     * Destroy View
+     */
     @Override
     public void onDestroyView() {
         super.onDestroyView();
