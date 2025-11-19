@@ -33,7 +33,7 @@ public class CoreLoopActivity extends AppCompatActivity {
         btn3 = findViewById(R.id.btn_choice3);
 
         scenarios = makeStubScenarios();
-        //render();
+
         //listen for when fragments are popped from back stack
         getSupportFragmentManager().addOnBackStackChangedListener(() -> {
             if (getSupportFragmentManager().getBackStackEntryCount() == 0) {
@@ -43,12 +43,9 @@ public class CoreLoopActivity extends AppCompatActivity {
                 //increment to next week AFTER returning from summary
                 currentIndex++;
 
-//                if (currentIndex < scenarios.size()) {
-//                    render();
-//                }
                 //check if game is over
                 if (currentIndex >= scenarios.size()) {
-                    //Toast.makeText(this, "End of game. You've completed all weeks!", Toast.LENGTH_LONG).show();
+                    //finish game
                     finish();
                 } else {
                     //render the next week
@@ -136,6 +133,7 @@ public class CoreLoopActivity extends AppCompatActivity {
      * @param isFinalWeek - boolean
      */
     private void showSummary(int previousPower, int previousLoyalty, int previousHeat, String chosenAction, boolean isFinalWeek) {
+        //set showing fragment to true
         showingFragment = true;
 
         //outcome text based on choice
@@ -144,7 +142,7 @@ public class CoreLoopActivity extends AppCompatActivity {
         //generate hint based on current stats
         String hint = generateHint();
 
-        //If this is the final week, show a different message
+        //if this is the final week, show a warning message
         if (isFinalWeek) {
             showFinalBriefingAlert();
         }
