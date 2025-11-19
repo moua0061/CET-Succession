@@ -28,6 +28,7 @@ public class SummaryFragment extends Fragment {
     private static final String ARG_PREVIOUS_POWER = "previous_power";
     private static final String ARG_PREVIOUS_LOYALTY = "previous_loyalty";
     private static final String ARG_PREVIOUS_HEAT = "previous_heat";
+    private static final String ARG_IS_FINAL_WEEK = "is_final_week";
 
     /**
      * Factory method to create SummaryFragment with data
@@ -41,7 +42,8 @@ public class SummaryFragment extends Fragment {
             int currentHeat,
             int previousPower,
             int previousLoyalty,
-            int previousHeat
+            int previousHeat,
+            boolean isFinalWeek
     ) {
         SummaryFragment fragment = new SummaryFragment();
         Bundle args = new Bundle();
@@ -54,6 +56,7 @@ public class SummaryFragment extends Fragment {
         args.putInt(ARG_PREVIOUS_POWER, previousPower);
         args.putInt(ARG_PREVIOUS_LOYALTY, previousLoyalty);
         args.putInt(ARG_PREVIOUS_HEAT, previousHeat);
+        args.putBoolean(ARG_IS_FINAL_WEEK, isFinalWeek);
         fragment.setArguments(args);
         return fragment;
     }
@@ -86,6 +89,7 @@ public class SummaryFragment extends Fragment {
             String outcome = args.getString(ARG_OUTCOME, "");
             String hint = args.getString(ARG_HINT, "");
             int week = args.getInt(ARG_WEEK, 1);
+            boolean isFinalWeek = args.getBoolean(ARG_IS_FINAL_WEEK, false);
 
             //create GameState from current values
             GameState state = new GameState();
@@ -98,6 +102,11 @@ public class SummaryFragment extends Fragment {
             int previousHeat = args.getInt(ARG_PREVIOUS_HEAT, 0);
 
             viewModel.setSummaryData(state, previousPower, previousLoyalty, previousHeat, outcome, hint, week);
+
+            //hide Continue button if this is the final week
+            if (isFinalWeek) {
+                binding.btnContinue.setVisibility(View.GONE);
+            }
         }
     }
 

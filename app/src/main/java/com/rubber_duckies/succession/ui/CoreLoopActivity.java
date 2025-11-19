@@ -1,5 +1,6 @@
 package com.rubber_duckies.succession.ui;
 
+import android.app.AlertDialog;
 import android.os.Bundle;
 import android.widget.*;
 import androidx.appcompat.app.AppCompatActivity;
@@ -100,9 +101,11 @@ public class CoreLoopActivity extends AppCompatActivity {
 
         applyChoice(c);
         //Toast.makeText(this, c.text, Toast.LENGTH_SHORT).show();
+        //check if this is the last scenario
+        boolean isFinalWeek = (currentIndex + 1) >= scenarios.size();
 
         //go to SummaryFragment instead of immediately continuing
-        showSummary(previousPower, previousLoyalty, previousHeat, c.text);
+        showSummary(previousPower, previousLoyalty, previousHeat, c.text, isFinalWeek);
 
         //increment to next week
         //currentIndex++;
@@ -117,24 +120,32 @@ public class CoreLoopActivity extends AppCompatActivity {
         //}
     }
 
-    private void showSummary(int previousPower, int previousLoyalty, int previousHeat, String chosenAction) {
+    private void showSummary(int previousPower, int previousLoyalty, int previousHeat, String chosenAction, boolean isFinalWeek) {
+        showingFragment = true;
+
         //outcome text based on choice
         String outcome = "You chose: \"" + chosenAction + "\"\n\nThe political landscape shifts in response to your decision..." + "Your allies and enemies take note of your actions.";
 
         //generate hint based on current stats
         String hint = generateHint();
 
+        //If this is the final week, show a different message
+        if (isFinalWeek) {
+            showFinalWeekAlert();
+        }
+
         //create and show SummaryFragment
         SummaryFragment summaryFragment = SummaryFragment.newInstance(
                 outcome,
                 hint,
-                currentIndex, //current week
+                currentIndex +1, //current week
                 state.power,
                 state.loyalty,
                 state.heat,
                 previousPower,
                 previousLoyalty,
-                previousHeat
+                previousHeat,
+                isFinalWeek
         );
 
         //replace the current view with the summary fragment
@@ -143,6 +154,22 @@ public class CoreLoopActivity extends AppCompatActivity {
                 .replace(android.R.id.content, summaryFragment)
                 .addToBackStack("summary")
                 .commit();
+    }
+
+    /**
+     * Shows an alert when the player reaches the final week
+     */
+    private void showFinalWeekAlert() {
+        new AlertDialog.Builder(this)
+                .setTitle("End of Available Briefings")
+                .setMessage("You have reached the maximum limit of briefings for today. " +
+                        "The President will provide more briefings tomorrow. " +
+                        "Your progress has been noted.")
+                .setPositiveButton("Understood", (dialog, which) -> {
+                    dialog.dismiss();
+                })
+                .setCancelable(false)
+                .show();
     }
 
     private String generateHint() {
