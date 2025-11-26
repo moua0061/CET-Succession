@@ -7,6 +7,9 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="victory_green">#2ECC71</color>
+    <color name="defeat_red">#E74C3C</color>
+    <color name="stat_warning">#F1C40F</color> <color name="stat_danger">#E74C3C</color>  <color name="stat_safe">#FFFFFF</color>    <color name="btn_grey">#7F8C8D</color>
 
     <!-- Main Menu -->
     <color name="background_dark">#1a1a1a</color>
