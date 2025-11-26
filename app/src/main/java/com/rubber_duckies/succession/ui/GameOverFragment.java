@@ -84,13 +84,21 @@ public class GameOverFragment extends Fragment {
 
 		// Listeners
 		btnPlayAgain.setOnClickListener(v -> {
-			// Restart Activity
+
 			if (getActivity() != null) {
-				getActivity().recreate();
+				// Start a fresh instance of CoreLoopActivity
+				Intent intent = new Intent(getActivity(), CoreLoopActivity.class);
+
+				// Clear the back stack so the user can't "back" into the finished game
+				intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+
+				startActivity(intent);
+				getActivity().finish();
 			}
 		});
+		btnExit.setOnClickListener(v ->
 
-		btnExit.setOnClickListener(v -> {
+		{
 			// Go to Main Menu
 			if (getActivity() != null) {
 				Intent intent = new Intent(getActivity(), MainActivity.class);

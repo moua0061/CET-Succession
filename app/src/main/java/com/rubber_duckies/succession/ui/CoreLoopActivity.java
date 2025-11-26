@@ -47,18 +47,22 @@ public class CoreLoopActivity extends AppCompatActivity {
 		// listen for when fragments are popped from back stack
 		getSupportFragmentManager().addOnBackStackChangedListener(() -> {
 			if (getSupportFragmentManager().getBackStackEntryCount() == 0) {
-				// fragment was popped, we're back to the activity
 				showingFragment = false;
 
-				// increment to next week AFTER returning from summary
+				// Increment week after summary
 				currentIndex++;
 
-				// check if game is over
+				// CHECK: Is the game over?
 				if (currentIndex >= scenarios.size()) {
-					// finish game
-					finish();
+					// NEW LOGIC: Win/Loss Condition
+					// User Rule: "Heat higher than Power = Lose"
+					if (state.heat > state.power) {
+						triggerGameOver(false); // Defeat
+					} else {
+						triggerGameOver(true); // Victory
+					}
 				} else {
-					// render the next week
+					// Game continues
 					render();
 				}
 			}
@@ -168,16 +172,24 @@ public class CoreLoopActivity extends AppCompatActivity {
 	 * In Phase 2, this will launch the GameOverFragment.
 	 */
 	private void triggerGameOver(boolean victory) {
-		showingFragment = true;
+		showingFragment = true; // Prevent render() from overwriting this
 
-		String narrative = victory
-				? "Your rivals sat silent as the floor erupted. Heat had boiled, loyalty thinned—but Power held. And Power answers no one."
-				: "The delegation moved on without your name. The cameras turned elsewhere. In politics, vanishing is the same as losing.";
+		String narrative;
+		if (victory) {
+			narrative = "Your rivals sat silent as the floor erupted. Heat had boiled, loyalty thinned—but Power held. And Power answers no one.";
+		} else {
+			// Customize text based on WHY they lost if you want
+			if (state.heat > state.power) {
+				narrative = "The media firestorm was too much. Without enough Power to quell the Heat, your administration collapsed.";
+			} else {
+				narrative = "The delegation moved on without your name. In politics, vanishing is the same as losing.";
+			}
+		}
 
-		// --- PHASE 2: PERSISTENCE ---
-		saveHighScore(currentIndex + 1); // Save current week
-		// ----------------------------
+		// Save High Score (Phase 2 logic)
+		saveHighScore(currentIndex);
 
+		// Show Game Over Screen
 		GameOverFragment fragment = GameOverFragment.newInstance(
 				victory,
 				state.power,
@@ -188,7 +200,7 @@ public class CoreLoopActivity extends AppCompatActivity {
 		getSupportFragmentManager()
 				.beginTransaction()
 				.replace(android.R.id.content, fragment)
-				.commit(); // No back stack, we don't want them to go back to the game
+				.commit();
 	}
 
 	// Helper to save high score
@@ -221,11 +233,6 @@ public class CoreLoopActivity extends AppCompatActivity {
 
 		// generate hint based on current stats
 		String hint = generateHint();
-
-		// if this is the final week, show a warning message
-		if (isFinalWeek) {
-			showFinalBriefingAlert();
-		}
 
 		// create and show SummaryFragment
 		SummaryFragment summaryFragment = SummaryFragment.newInstance(
