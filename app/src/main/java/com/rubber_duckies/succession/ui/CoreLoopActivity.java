@@ -5,6 +5,9 @@ import android.os.Bundle;
 import android.widget.*;
 import androidx.appcompat.app.AppCompatActivity;
 import java.util.Random;
+import android.content.Context;
+import android.content.SharedPreferences;
+import androidx.core.content.ContextCompat;
 
 import com.rubber_duckies.succession.*;
 import com.rubber_duckies.succession.R;
@@ -81,6 +84,10 @@ public class CoreLoopActivity extends AppCompatActivity {
 		tvHeat.setText(String.valueOf(state.heat));
 		tvLoyalty.setText(String.valueOf(state.loyalty));
 
+		updateStatColor(tvPower, state.power);
+		updateStatColor(tvHeat, state.heat);
+		updateStatColor(tvLoyalty, state.loyalty);
+
 		btn1.setText(sc.choices[0].text);
 		btn2.setText(sc.choices[1].text);
 		btn3.setText(sc.choices[2].text);
@@ -88,6 +95,16 @@ public class CoreLoopActivity extends AppCompatActivity {
 		btn1.setOnClickListener(v -> onChoose(sc.choices[0]));
 		btn2.setOnClickListener(v -> onChoose(sc.choices[1]));
 		btn3.setOnClickListener(v -> onChoose(sc.choices[2]));
+	}
+
+	private void updateStatColor(TextView tv, int value) {
+		if (value <= 20 || value >= 80) {
+			tv.setTextColor(ContextCompat.getColor(this, R.color.stat_danger));
+		} else if (value < 30 || value > 70) {
+			tv.setTextColor(ContextCompat.getColor(this, R.color.stat_warning));
+		} else {
+			tv.setTextColor(ContextCompat.getColor(this, R.color.stat_safe));
+		}
 	}
 
 	/**
@@ -151,19 +168,36 @@ public class CoreLoopActivity extends AppCompatActivity {
 	 * In Phase 2, this will launch the GameOverFragment.
 	 */
 	private void triggerGameOver(boolean victory) {
-		String title = victory ? "VICTORY" : "DEFEAT";
-		String message = victory
-				? "You have successfully navigated the succession crisis."
-				: "Your administration has collapsed. One of your stats hit a critical limit.";
+		showingFragment = true;
 
-		new AlertDialog.Builder(this)
-				.setTitle(title)
-				.setMessage(message)
-				.setCancelable(false)
-				.setPositiveButton("Return to Menu", (dialog, which) -> {
-					finish(); // Closes activity and returns to Main Menu
-				})
-				.show();
+		String narrative = victory
+				? "Your rivals sat silent as the floor erupted. Heat had boiled, loyalty thinned—but Power held. And Power answers no one."
+				: "The delegation moved on without your name. The cameras turned elsewhere. In politics, vanishing is the same as losing.";
+
+		// --- PHASE 2: PERSISTENCE ---
+		saveHighScore(currentIndex + 1); // Save current week
+		// ----------------------------
+
+		GameOverFragment fragment = GameOverFragment.newInstance(
+				victory,
+				state.power,
+				state.loyalty,
+				state.heat,
+				narrative);
+
+		getSupportFragmentManager()
+				.beginTransaction()
+				.replace(android.R.id.content, fragment)
+				.commit(); // No back stack, we don't want them to go back to the game
+	}
+
+	// Helper to save high score
+	private void saveHighScore(int week) {
+		SharedPreferences prefs = getSharedPreferences("SuccessionPrefs", Context.MODE_PRIVATE);
+		int currentHigh = prefs.getInt("HIGH_SCORE", 0);
+		if (week > currentHigh) {
+			prefs.edit().putInt("HIGH_SCORE", week).apply();
+		}
 	}
 
 	/**

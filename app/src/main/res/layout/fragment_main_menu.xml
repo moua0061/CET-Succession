@@ -29,6 +29,17 @@
             android:fontFamily="@font/press_start_2p"
             android:layout_marginBottom="48dp" />
 
+	<TextView
+	    android:id="@+id/tvHighScore"
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"
+	    android:text="BEST RUN: WEEK 0"
+	    android:textColor="#F1C40F"
+	    android:textSize="14sp"
+	    android:layout_marginTop="8dp"
+	    android:layout_marginBottom="24dp"
+	    android:fontFamily="@font/press_start_2p"
+	    android:gravity="center"/>
         <!-- Flag graphic placeholder -->
         <ImageView
             android:layout_width="280dp"
