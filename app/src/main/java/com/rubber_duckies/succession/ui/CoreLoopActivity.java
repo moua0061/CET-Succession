@@ -4,7 +4,6 @@ import android.app.AlertDialog;
 import android.os.Bundle;
 import android.widget.*;
 import androidx.appcompat.app.AppCompatActivity;
-import java.util.Random;
 import android.content.Context;
 import android.content.SharedPreferences;
 import androidx.core.content.ContextCompat;
@@ -38,11 +37,10 @@ public class CoreLoopActivity extends AppCompatActivity {
 
 		scenarios = makeStubScenarios();
 
-		Random rng = new Random();
-
-		state.power = 40 + rng.nextInt(21);
-		state.heat = 40 + rng.nextInt(21);
-		state.loyalty = 40 + rng.nextInt(21);
+		// CHANGED: stats now start at the threshold-required default values (50/50/50)
+		state.power = 50;
+		state.heat = 50;
+		state.loyalty = 50;
 
 		// listen for when fragments are popped from back stack
 		getSupportFragmentManager().addOnBackStackChangedListener(() -> {
@@ -54,12 +52,11 @@ public class CoreLoopActivity extends AppCompatActivity {
 
 				// CHECK: Is the game over?
 				if (currentIndex >= scenarios.size()) {
-					// NEW LOGIC: Win/Loss Condition
-					// User Rule: "Heat higher than Power = Lose"
-					if (state.heat > state.power) {
-						triggerGameOver(false); // Defeat
+					// CHANGED: new threshold based ending
+					if (state.presidencySecured || state.reelectionWon) {
+						triggerGameOver(true);
 					} else {
-						triggerGameOver(true); // Victory
+						triggerGameOver(false);
 					}
 				} else {
 					// Game continues
@@ -113,57 +110,49 @@ public class CoreLoopActivity extends AppCompatActivity {
 
 	/**
 	 * When selecting a choice from the briefing
-	 * 
+	 *
 	 * @param c - Choice
 	 */
 	private void onChoose(Choice c) {
-		// applyChoice(c);
-		// Toast.makeText(this, c.text, Toast.LENGTH_SHORT).show();
-		//
-		// currentIndex++;
-		// if (currentIndex >= scenarios.size()) {
-		// Toast.makeText(this, "End of game.", Toast.LENGTH_LONG).show();
-		// finish();
-		// } else {
-		// render();
-		// }
 		// store previous stats before applying choice
 		int previousPower = state.power;
 		int previousLoyalty = state.loyalty;
 		int previousHeat = state.heat;
 
 		applyChoice(c);
-		// Toast.makeText(this, c.text, Toast.LENGTH_SHORT).show();
-		// check if this is the last scenario
-		if (isSuddenDeath()) {
-			triggerGameOver(false); // False = Defeat
-			return; // Stop execution, do not show summary
+
+		// ADDED: presidency threshold
+		if (state.presidencySecured) {
+			triggerGameOver(true);
+			return;
 		}
+
+		// ADDED: re-election threshold
+		if (state.reelectionWon) {
+			triggerGameOver(true);
+			return;
+		}
+
+		// Keep original sudden-death handling
+		if (isSuddenDeath()) {
+			triggerGameOver(false);
+			return;
+		}
+
 		boolean isFinalWeek = (currentIndex + 1) >= scenarios.size();
 
 		// go to SummaryFragment instead of immediately continuing
 		showSummary(previousPower, previousLoyalty, previousHeat, c.text, isFinalWeek);
-
-		// increment to next week
-		// currentIndex++;
-
-		// check if game is over
-		// if (currentIndex >= scenarios.size()) {
-		// Toast.makeText(this, "End of game.", Toast.LENGTH_LONG).show();
-		// finish();
-		// } else {
-		// show summary fragment with the results
-		// showSummary(previousPower, previousLoyalty, previousHeat, c.text);
-		// }
 	}
 
 	/**
-	 * Checks if any stat has breached the critical limits (<= 0 or >= 100)
+	 * Checks if any stat has breached the critical lower limits (<= 0)
 	 */
 	private boolean isSuddenDeath() {
-		return state.power <= 0 || state.power >= 100 ||
-				state.heat <= 0 || state.heat >= 100 ||
-				state.loyalty <= 0 || state.loyalty >= 100;
+		// CHANGED: removed old >=100 loss condition because 100 is now part of the win logic
+		return state.power <= 0 ||
+				state.heat <= 0 ||
+				state.loyalty <= 0;
 	}
 
 	/**
@@ -172,24 +161,21 @@ public class CoreLoopActivity extends AppCompatActivity {
 	 * In Phase 2, this will launch the GameOverFragment.
 	 */
 	private void triggerGameOver(boolean victory) {
-		showingFragment = true; // Prevent render() from overwriting this
+		showingFragment = true;
 
 		String narrative;
 		if (victory) {
-			narrative = "Your rivals sat silent as the floor erupted. Heat had boiled, loyalty thinned—but Power held. And Power answers no one.";
+			narrative = "Your rivals sat silent as the floor erupted. You balanced Power, Loyalty, and Heat long enough to secure victory.";
 		} else {
-			// Customize text based on WHY they lost if you want
-			if (state.heat > state.power) {
-				narrative = "The media firestorm was too much. Without enough Power to quell the Heat, your administration collapsed.";
+			if (state.onBlacklistedState) {
+				narrative = "Your Heat pushed you into the Blacklisted State. Without enough recovery, your path to the presidency collapsed.";
 			} else {
 				narrative = "The delegation moved on without your name. In politics, vanishing is the same as losing.";
 			}
 		}
 
-		// Save High Score (Phase 2 logic)
 		saveHighScore(currentIndex);
 
-		// Show Game Over Screen
 		GameOverFragment fragment = GameOverFragment.newInstance(
 				victory,
 				state.power,
@@ -214,7 +200,7 @@ public class CoreLoopActivity extends AppCompatActivity {
 
 	/**
 	 * Show the Summary Fragment that shows the outcome, hint, stats, trends, etc
-	 * 
+	 *
 	 * @param previousPower   - int
 	 * @param previousLoyalty - int
 	 * @param previousHeat    - int
@@ -223,22 +209,18 @@ public class CoreLoopActivity extends AppCompatActivity {
 	 */
 	private void showSummary(int previousPower, int previousLoyalty, int previousHeat, String chosenAction,
 			boolean isFinalWeek) {
-		// set showing fragment to true
 		showingFragment = true;
 
-		// outcome text based on choice
 		String outcome = "You chose: \"" + chosenAction
 				+ "\"\n\nThe political landscape shifts in response to your decision..."
 				+ "Your allies and enemies take note of your actions.";
 
-		// generate hint based on current stats
 		String hint = generateHint();
 
-		// create and show SummaryFragment
 		SummaryFragment summaryFragment = SummaryFragment.newInstance(
 				outcome,
 				hint,
-				currentIndex + 1, // current week
+				currentIndex + 1,
 				state.power,
 				state.loyalty,
 				state.heat,
@@ -247,7 +229,6 @@ public class CoreLoopActivity extends AppCompatActivity {
 				previousHeat,
 				isFinalWeek);
 
-		// replace the current view with the summary fragment
 		getSupportFragmentManager()
 				.beginTransaction()
 				.replace(android.R.id.content, summaryFragment)
@@ -273,10 +254,19 @@ public class CoreLoopActivity extends AppCompatActivity {
 
 	/**
 	 * Generate a hint for next week
-	 * 
+	 *
 	 * @return String
 	 */
 	private String generateHint() {
+
+		if (state.presidencySecured) {
+			return "You secured the presidency. Phase 2 begins.";
+		}
+
+		if (state.onBlacklistedState) {
+			return "Your Heat is too high. You are now in the Blacklisted State and must recover your reputation.";
+		}
+
 		if (state.power < 30) {
 			return "You need to build more political influence. Consider choices that increase your power.";
 		} else if (state.loyalty < 30) {
@@ -298,7 +288,7 @@ public class CoreLoopActivity extends AppCompatActivity {
 
 	/**
 	 * Apply the choice selected and calculates the stats for power, heat & loyalty
-	 * 
+	 *
 	 * @param c - Choice
 	 */
 	private void applyChoice(Choice c) {
@@ -306,11 +296,17 @@ public class CoreLoopActivity extends AppCompatActivity {
 		state.power += (int) (c.effects.power * multiplier);
 		state.heat += (int) (c.effects.heat * multiplier);
 		state.loyalty += (int) (c.effects.loyalty * multiplier);
+
+		// ADDED: keep stats valid
+		state.clampStats();
+
+		// ADDED: evaluate thresholds
+		state.updateThresholds();
 	}
 
 	/**
 	 * Make the briefings/scenarios for each work
-	 * 
+	 *
 	 * @return List<Scenario>
 	 */
 	private List<Scenario> makeStubScenarios() {
@@ -343,9 +339,6 @@ public class CoreLoopActivity extends AppCompatActivity {
 		c3.effects.loyalty = 1;
 
 		s1.choices = new Choice[] { c1, c2, c3 };
-
-		// repeat or add more for testing
-		// return Arrays.asList(s1, s1, s1);
 		scenarioList.add(s1);
 
 		// scenario 2:
