@@ -33,12 +33,57 @@
     </LinearLayout>
 
     <!-- Scenario text -->
-    <TextView android:id="@+id/tv_text"
-        android:textColor="#FFFFFF" android:textSize="16sp" android:layout_gravity="center"
-        android:layout_marginTop="24dp"
-        android:textAlignment="center"
-        android:fontFamily="@font/press_start_2p"
-        android:layout_width="match_parent" android:layout_height="wrap_content"/>
+    <!-- Scenario Title / Description -->
+<TextView
+    android:id="@+id/tv_scenario"
+    android:textColor="#FFFFFF"
+    android:textSize="16sp"
+    android:layout_marginTop="24dp"
+    android:textAlignment="center"
+    android:fontFamily="@font/press_start_2p"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"/>
+
+<!-- AI Loading -->
+<TextView
+    android:id="@+id/tv_ai_loading"
+    android:text="AI thinking..."
+    android:textColor="#AAAAAA"
+    android:gravity="center"
+    android:layout_marginTop="8dp"
+    android:visibility="gone"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"/>
+
+<!-- President / Scenario Title -->
+<TextView
+    android:id="@+id/tv_president"
+    android:textColor="#FFFFFF"
+    android:textSize="14sp"
+    android:gravity="center"
+    android:layout_marginTop="12dp"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"/>
+
+<!-- Advisor -->
+<TextView
+    android:id="@+id/tv_advisor"
+    android:textColor="#CCCCCC"
+    android:textSize="13sp"
+    android:gravity="center"
+    android:layout_marginTop="6dp"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"/>
+
+<!-- Hint -->
+<TextView
+    android:id="@+id/tv_hint"
+    android:textColor="#22C55E"
+    android:textSize="13sp"
+    android:gravity="center"
+    android:layout_marginTop="10dp"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"/>
 
     <!-- Character portrait -->
     <ImageView android:id="@+id/img_character"
