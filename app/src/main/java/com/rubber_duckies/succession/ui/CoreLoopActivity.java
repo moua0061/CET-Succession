@@ -90,46 +90,6 @@ public class CoreLoopActivity extends AppCompatActivity {
 		render();
 	}
 
-	/**
-	 * Renders the Summary Fragment
-	 */
-	/*private void render() {
-		// don't render if we're showing a fragment
-		if (showingFragment) {
-			return;
-		}
-
-		//Scenario sc = scenarios.get(currentIndex);
-		//tvText.setText(sc.text);
-		Scenario sc = scenarios.get(currentIndex);
-
-		// Show fallback static text first
-		tvText.setText(sc.text);
-		Toast.makeText(this, "Calling AI...", Toast.LENGTH_SHORT).show();
-		// ADDED: call AI backend to enrich the dialogue
-
-
-		loadAiDialogue(sc);
-
-		tvWeek.setText("WEEK " + (currentIndex + 1));
-
-		tvPower.setText(String.valueOf(state.power));
-		tvHeat.setText(String.valueOf(state.heat));
-		tvLoyalty.setText(String.valueOf(state.loyalty));
-
-		updateStatColor(tvPower, state.power);
-		updateStatColor(tvHeat, state.heat);
-		updateStatColor(tvLoyalty, state.loyalty);
-
-		btn1.setText(sc.choices[0].text);
-		btn2.setText(sc.choices[1].text);
-		btn3.setText(sc.choices[2].text);
-
-		btn1.setOnClickListener(v -> onChoose(sc.choices[0]));
-		btn2.setOnClickListener(v -> onChoose(sc.choices[1]));
-		btn3.setOnClickListener(v -> onChoose(sc.choices[2]));
-	}*/
-
 	private void render() {
     if (showingFragment) {
         return;
@@ -155,54 +115,6 @@ public class CoreLoopActivity extends AppCompatActivity {
     loadAiScenario();
 }
 
-	// ADDED: requests AI-generated dialogue for the current scenario
-	/*private void loadAiDialogue(Scenario sc) {
-    if (aiService == null) {
-        tvText.setText(sc.text + "\n\nAI ERROR: aiService is null");
-        return;
-    }
-
-    tvText.setText(sc.text + "\n\nAI DEBUG: loadAiDialogue started");
-
-    AiDialogueRequest request = new AiDialogueRequest(
-            currentIndex + 1,
-            state.phase,
-            state.power,
-            state.loyalty,
-            state.heat,
-            state.onBlacklistedState,
-            sc.title,
-            sc.text
-    );
-
-   		aiService.getDialogue(request).enqueue(new Callback<AiDialogueResponse>() {
-    		@Override
-    	public void onResponse(Call<AiDialogueResponse> call, Response<AiDialogueResponse> response) {
-       		 	if (!response.isSuccessful() || response.body() == null) {
-           		 tvText.setText(sc.text + "\n\nAI ERROR: response failed with code " + response.code());
-           		 return;
-        		}
-
-        		AiDialogueResponse ai = response.body();
-
-       			 String dynamicText =
-                sc.text +
-                "\n\nPresident: " + ai.president_line +
-                "\nAdvisor: " + ai.advisor_line +
-                "\n\nHint: " + ai.hint +
-                "\nTone: " + ai.tone;
-
-       		 		tvText.setText(dynamicText);
-   			 }
-
-    		@Override
-    		public void onFailure(Call<AiDialogueResponse> call, Throwable t) {
-       			 tvText.setText(sc.text + "\n\nAI ERROR: " + t.getMessage());
-   			 }
-		});
-	}	*/
-
-
 	private void updateStatColor(TextView tv, int value) {
 		if (value <= 20 || value >= 80) {
 			tv.setTextColor(ContextCompat.getColor(this, R.color.stat_danger));
@@ -212,43 +124,6 @@ public class CoreLoopActivity extends AppCompatActivity {
 			tv.setTextColor(ContextCompat.getColor(this, R.color.stat_safe));
 		}
 	}
-
-	/**
-	 * When selecting a choice from the briefing
-	 *
-	 * @param c - Choice
-	 */
-	/*private void onChoose(Choice c) {
-		// store previous stats before applying choice
-		int previousPower = state.power;
-		int previousLoyalty = state.loyalty;
-		int previousHeat = state.heat;
-
-		applyChoice(c);
-
-		// ADDED: presidency threshold
-		if (state.presidencySecured) {
-			triggerGameOver(true);
-			return;
-		}
-
-		// ADDED: re-election threshold
-		if (state.reelectionWon) {
-			triggerGameOver(true);
-			return;
-		}
-
-		// Keep original sudden-death handling
-		if (isSuddenDeath()) {
-			triggerGameOver(false);
-			return;
-		}
-
-		boolean isFinalWeek = (currentIndex + 1) >= scenarios.size();
-
-		// go to SummaryFragment instead of immediately continuing
-		showSummary(previousPower, previousLoyalty, previousHeat, c.text, isFinalWeek);
-	}*/
 
 	/**
 	 * Checks if any stat has breached the critical lower limits (<= 0)
@@ -302,44 +177,6 @@ public class CoreLoopActivity extends AppCompatActivity {
 			prefs.edit().putInt("HIGH_SCORE", week).apply();
 		}
 	}
-
-	/**
-	 * Show the Summary Fragment that shows the outcome, hint, stats, trends, etc
-	 *
-	 * @param previousPower   - int
-	 * @param previousLoyalty - int
-	 * @param previousHeat    - int
-	 * @param chosenAction    - String
-	 * @param isFinalWeek     - boolean
-	 */
-	/*private void showSummary(int previousPower, int previousLoyalty, int previousHeat, String chosenAction,
-			boolean isFinalWeek) {
-		showingFragment = true;
-
-		String outcome = "You chose: \"" + chosenAction
-				+ "\"\n\nThe political landscape shifts in response to your decision..."
-				+ "Your allies and enemies take note of your actions.";
-
-		String hint = generateHint();
-
-		SummaryFragment summaryFragment = SummaryFragment.newInstance(
-				outcome,
-				hint,
-				currentIndex + 1,
-				state.power,
-				state.loyalty,
-				state.heat,
-				previousPower,
-				previousLoyalty,
-				previousHeat,
-				isFinalWeek);
-
-		getSupportFragmentManager()
-				.beginTransaction()
-				.replace(android.R.id.content, summaryFragment)
-				.addToBackStack("summary")
-				.commit();
-	}*/
 
 	/**
 	 * Shows an alert when the player reaches the final briefing for the day
@@ -531,164 +368,164 @@ public class CoreLoopActivity extends AppCompatActivity {
 		return sc;
 	}
 	//ADD: new method to loadAi scenario()
-		private void loadAiScenario() {
-			if (aiService == null) {
-				loadFallbackScenario();
-				return;
-			}
+	private void loadAiScenario() {
+		if (aiService == null) {
+			loadFallbackScenario();
+			return;
+		}
 
-			// Use cached scenario if already generated for this week
-			if (aiScenarioCache.containsKey(currentIndex)) {
-				AiScenarioResponse cached = aiScenarioCache.get(currentIndex);
-				applyAiScenarioToUi(cached);
-				return;
-			}
+		// Use cached scenario if already generated for this week
+		if (aiScenarioCache.containsKey(currentIndex)) {
+			AiScenarioResponse cached = aiScenarioCache.get(currentIndex);
+			applyAiScenarioToUi(cached);
+			return;
+		}
 
-			AiScenarioRequest request = new AiScenarioRequest(
-					currentIndex + 1,
-					state.phase,
-					state.power,
-					state.loyalty,
-					state.heat,
-					state.onBlacklistedState
-			);
+		AiScenarioRequest request = new AiScenarioRequest(
+				currentIndex + 1,
+				state.phase,
+				state.power,
+				state.loyalty,
+				state.heat,
+				state.onBlacklistedState
+		);
 
-			aiService.generateScenario(request).enqueue(new Callback<AiScenarioResponse>() {
-				@Override
-				public void onResponse(Call<AiScenarioResponse> call, Response<AiScenarioResponse> response) {
-					if (!response.isSuccessful() || response.body() == null) {
-						loadFallbackScenario();
-						return;
-					}
-
-					AiScenarioResponse ai = response.body();
-
-					// Cache it so we don't regenerate the same week
-					aiScenarioCache.put(currentIndex, ai);
-
-					applyAiScenarioToUi(ai);
-				}
-
-				@Override
-				public void onFailure(Call<AiScenarioResponse> call, Throwable t) {
+		aiService.generateScenario(request).enqueue(new Callback<AiScenarioResponse>() {
+			@Override
+			public void onResponse(Call<AiScenarioResponse> call, Response<AiScenarioResponse> response) {
+				if (!response.isSuccessful() || response.body() == null) {
 					loadFallbackScenario();
+					return;
 				}
-			});
+
+				AiScenarioResponse ai = response.body();
+
+				// Cache it so we don't regenerate the same week
+				aiScenarioCache.put(currentIndex, ai);
+
+				applyAiScenarioToUi(ai);
+			}
+
+			@Override
+			public void onFailure(Call<AiScenarioResponse> call, Throwable t) {
+				loadFallbackScenario();
+			}
+		});
+	}
+	//Ui aply method
+	private void applyAiScenarioToUi(AiScenarioResponse ai) {
+		tvAiLoading.setVisibility(View.GONE);
+
+		currentAiHint = ai.hint;
+		currentAiTone = ai.tone;
+
+		for (int i = 0; i < 3; i++) {
+			currentAiOutcomes[i] = ai.choices[i].outcome;
 		}
-		//Ui aply method
-		private void applyAiScenarioToUi(AiScenarioResponse ai) {
-			tvAiLoading.setVisibility(View.GONE);
 
-			currentAiHint = ai.hint;
-			currentAiTone = ai.tone;
+		Scenario sc = convertAiScenario(ai);
 
-			for (int i = 0; i < 3; i++) {
-				currentAiOutcomes[i] = ai.choices[i].outcome;
-			}
+		tvScenario.setText(sc.text);
+		tvPresident.setText("Scenario: " + ai.title);
+		tvAdvisor.setText("Advisor: Tone = " + ai.tone);
+		tvHint.setText("Hint: " + ai.hint);
 
-			Scenario sc = convertAiScenario(ai);
+		btn1.setText(sc.choices[0].text);
+		btn2.setText(sc.choices[1].text);
+		btn3.setText(sc.choices[2].text);
 
-			tvScenario.setText(sc.text);
-			tvPresident.setText("Scenario: " + ai.title);
-			tvAdvisor.setText("Advisor: Tone = " + ai.tone);
-			tvHint.setText("Hint: " + ai.hint);
+		btn1.setOnClickListener(v -> onChooseWithOutcome(sc.choices[0], currentAiOutcomes[0]));
+		btn2.setOnClickListener(v -> onChooseWithOutcome(sc.choices[1], currentAiOutcomes[1]));
+		btn3.setOnClickListener(v -> onChooseWithOutcome(sc.choices[2], currentAiOutcomes[2]));
+	}
+	// Fallback method
+	private void loadFallbackScenario() {
+		tvAiLoading.setVisibility(View.GONE);
 
-			btn1.setText(sc.choices[0].text);
-			btn2.setText(sc.choices[1].text);
-			btn3.setText(sc.choices[2].text);
+		Scenario sc = scenarios.get(currentIndex);
 
-			btn1.setOnClickListener(v -> onChooseWithOutcome(sc.choices[0], currentAiOutcomes[0]));
-			btn2.setOnClickListener(v -> onChooseWithOutcome(sc.choices[1], currentAiOutcomes[1]));
-			btn3.setOnClickListener(v -> onChooseWithOutcome(sc.choices[2], currentAiOutcomes[2]));
+		tvScenario.setText(sc.text);
+		tvPresident.setText("President: Default scenario mode");
+		tvAdvisor.setText("Advisor: AI unavailable");
+		tvHint.setText("Hint: Using fallback content.");
+
+		currentAiHint = "Using fallback content.";
+		currentAiTone = "neutral";
+		currentAiOutcomes[0] = "Your decision changes the political landscape.";
+		currentAiOutcomes[1] = "Your decision changes the political landscape.";
+		currentAiOutcomes[2] = "Your decision changes the political landscape.";
+
+		btn1.setText(sc.choices[0].text);
+		btn2.setText(sc.choices[1].text);
+		btn3.setText(sc.choices[2].text);
+
+		btn1.setOnClickListener(v -> onChooseWithOutcome(sc.choices[0], currentAiOutcomes[0]));
+		btn2.setOnClickListener(v -> onChooseWithOutcome(sc.choices[1], currentAiOutcomes[1]));
+		btn3.setOnClickListener(v -> onChooseWithOutcome(sc.choices[2], currentAiOutcomes[2]));
+	}
+	//Add a new choice handler with AI outcome
+	private void onChooseWithOutcome(Choice c, String aiOutcome) {
+		int previousPower = state.power;
+		int previousLoyalty = state.loyalty;
+		int previousHeat = state.heat;
+
+		applyChoice(c);
+
+		if (state.presidencySecured) {
+			triggerGameOver(true);
+			return;
 		}
-		// Fallback method
-		private void loadFallbackScenario() {
-			tvAiLoading.setVisibility(View.GONE);
 
-			Scenario sc = scenarios.get(currentIndex);
-
-			tvScenario.setText(sc.text);
-			tvPresident.setText("President: Default scenario mode");
-			tvAdvisor.setText("Advisor: AI unavailable");
-			tvHint.setText("Hint: Using fallback content.");
-
-			currentAiHint = "Using fallback content.";
-			currentAiTone = "neutral";
-			currentAiOutcomes[0] = "Your decision changes the political landscape.";
-			currentAiOutcomes[1] = "Your decision changes the political landscape.";
-			currentAiOutcomes[2] = "Your decision changes the political landscape.";
-
-			btn1.setText(sc.choices[0].text);
-			btn2.setText(sc.choices[1].text);
-			btn3.setText(sc.choices[2].text);
-
-			btn1.setOnClickListener(v -> onChooseWithOutcome(sc.choices[0], currentAiOutcomes[0]));
-			btn2.setOnClickListener(v -> onChooseWithOutcome(sc.choices[1], currentAiOutcomes[1]));
-			btn3.setOnClickListener(v -> onChooseWithOutcome(sc.choices[2], currentAiOutcomes[2]));
+		if (state.reelectionWon) {
+			triggerGameOver(true);
+			return;
 		}
-		//Add a new choice handler with AI outcome
-		private void onChooseWithOutcome(Choice c, String aiOutcome) {
-			int previousPower = state.power;
-			int previousLoyalty = state.loyalty;
-			int previousHeat = state.heat;
 
-			applyChoice(c);
+		if (isSuddenDeath()) {
+			triggerGameOver(false);
+			return;
+		}
 
-			if (state.presidencySecured) {
-				triggerGameOver(true);
-				return;
-			}
+		boolean isFinalWeek = (currentIndex + 1) >= MAX_WEEKS;
 
-			if (state.reelectionWon) {
-				triggerGameOver(true);
-				return;
-			}
+		showSummaryWithAiOutcome(
+				previousPower,
+				previousLoyalty,
+				previousHeat,
+				aiOutcome,
+				currentAiHint,
+				isFinalWeek
+		);
+	}
+	//Add this new summary method
+	private void showSummaryWithAiOutcome(
+		int previousPower,
+		int previousLoyalty,
+		int previousHeat,
+		String outcome,
+		String hint,
+		boolean isFinalWeek
+		) {
+			showingFragment = true;
 
-			if (isSuddenDeath()) {
-				triggerGameOver(false);
-				return;
-			}
-
-			boolean isFinalWeek = (currentIndex + 1) >= MAX_WEEKS;
-
-			showSummaryWithAiOutcome(
-					previousPower,
-					previousLoyalty,
-					previousHeat,
-					aiOutcome,
-					currentAiHint,
-					isFinalWeek
+			SummaryFragment summaryFragment = SummaryFragment.newInstance(
+				outcome,
+				hint,
+				currentIndex + 1,
+				state.power,
+				state.loyalty,
+				state.heat,
+				previousPower,
+				previousLoyalty,
+				previousHeat,
+				isFinalWeek
 			);
-		}
-		//Add this new summary method
-		private void showSummaryWithAiOutcome(
-					int previousPower,
-					int previousLoyalty,
-					int previousHeat,
-					String outcome,
-					String hint,
-					boolean isFinalWeek
-			) {
-				showingFragment = true;
 
-				SummaryFragment summaryFragment = SummaryFragment.newInstance(
-						outcome,
-						hint,
-						currentIndex + 1,
-						state.power,
-						state.loyalty,
-						state.heat,
-						previousPower,
-						previousLoyalty,
-						previousHeat,
-						isFinalWeek
-				);
-
-				getSupportFragmentManager()
-						.beginTransaction()
-						.replace(android.R.id.content, summaryFragment)
-						.addToBackStack("summary")
-						.commit();
-		}
+			getSupportFragmentManager()
+			.beginTransaction()
+			.replace(android.R.id.content, summaryFragment)
+			.addToBackStack("summary")
+			.commit();
+	}
 
 }
