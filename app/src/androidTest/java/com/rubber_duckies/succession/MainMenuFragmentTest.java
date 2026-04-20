@@ -20,20 +20,6 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 /**
- * MainMenuFragmentTest
- *
- * UI unit tests for MainMenuFragment and HelpFragment.
- * Uses FragmentScenario to launch each fragment in isolation (no Activity required).
- * Uses Espresso to inspect views and simulate user interactions.
- *
- * Place this file in:
- *   app/src/androidTest/java/com/rubber_duckies/succession/MainMenuFragmentTest.java
- *
- * Required dependencies in build.gradle:
- *   androidTestImplementation "androidx.fragment:fragment-testing:1.6.1"
- *   androidTestImplementation "androidx.test.espresso:espresso-core:3.5.1"
- *   androidTestImplementation "androidx.test.ext:junit:1.1.5"
- *
  * Tests covered:
  *   TC-1  Main menu displays exactly 3 option buttons
  *   TC-2  The 3 buttons have the correct text: START, HELP, EXIT
